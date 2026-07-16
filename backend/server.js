@@ -1,35 +1,33 @@
-const express = require("express");
-const cors= require("cors");
+import express from "express";
+import cors from "cors";
+import db from "./config/db.js";
 
 const app = express();
 
 app.use(cors());
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     res.json({
-        success :true,
+        success: true,
         message: "Backend is running sucessfully",
-        project :"EMS"
+        project: "EMS"
     });
 });
-app.get("/about",(req,res)=>{
+app.get("/about", (req, res) => {
     res.send("This is about page");
 });
-app.get("/products",(req,res)=>{
-    const products = [
-        {
-            id:1,
-            name:"Laptop",
-            price :1000
-        },
-        {
-            id:2,
-            name:"Phone",
-            price :500
+app.get("/products", (req, res) => {
+    db.query("SELECT * FROM products", (
+        err, result) => {
+        if (err) {
+            return res.status(500).json({
+                message: "Database Error"
+            });
         }
-    ];
-    res.json(products);
-});1
+        res.json(result);
+    }
+    )
+});
 
 const PORT = 5000;
 

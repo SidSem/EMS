@@ -1,28 +1,28 @@
-import React ,{useState,useEffect} from 'react'
-import axios from 'axios'
-export const App = () => {
-  const [products,setProducts]=useState([]);
-  async function fetchUserData() {
-  try {
-    const response = await axios.get('http://localhost:5000/products');
-    console.log('Data fetched from Express:', response.data);
+import React, { useState, useEffect } from 'react';
+import ProductTable from './components/ProductTable';
+import { productServices } from './services/ProductService'; 
 
-    setProducts(response.data);
-  } catch (error) {
-    console.error('Could not fetch data from Express:', error);
+function App() {
+  const [products, setProducts] = useState([]);
+
+  async function fetchProducts() {
+    try {
+      const data = await productServices.getAllProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error('Could not fetch data from Express:', error);
+    }
   }
-}
-useEffect(() => {
-    fetchUserData();
-}, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
-    
     <div>
-      {products.map((product) => (
-        <div key ={product.id}>{product.name}</div>
-      ))}
+      <ProductTable products={products} />
     </div>
-  )
+  );
 }
-export default App
+
+export default App;
