@@ -5,6 +5,7 @@ import db from "./config/db.js";
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.json({
@@ -27,6 +28,31 @@ app.get("/products", (req, res) => {
         res.json(result);
     }
     )
+});
+app.post("/products", (req, res) => {
+
+    const { name, price, quantity, category } = req.body;
+
+    db.query(
+        "INSERT INTO products(name, price, quantity, category) VALUES (?, ?, ?, ?)",
+        [name, price, quantity, category],
+        (err, result) => {
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Database Error"
+                });
+            }
+
+            res.status(201).json({
+                success: true,
+                message: "Product Added Successfully"
+            });
+
+        }
+    );
+
 });
 
 const PORT = 5000;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ProductForm from './components/ProductForm';
 import ProductTable from './components/ProductTable';
 import { productServices } from './services/ProductService'; 
 
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <div>
+      <ProductForm/>
       <ProductTable products={products} />
     </div>
   );
