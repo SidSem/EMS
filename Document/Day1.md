@@ -1,20 +1,22 @@
-## Concept I learned today :
-How to setup express.
-How the Get functions work in express.
-Difference between send and json funciton.
-Async function in react.
-About key in rendering list.
-How to link Frontend and Backend.
-How to install and setup Axios.
+# Day 1: Foundation of Full-Stack Web Development
 
-## Mistakes I made today :
-Forgot how to render lists in react tried rendering them without using map funciton.
-Did not called async funciton.
+## Concepts Learned Today
+* **Express.js Setup:** Initialized an Express application and set up a basic local server.
+* **Express GET Methods:** Learned how to define GET endpoints to retrieve data.
+* **Response Methods:** Explored the difference between `res.send()` (sends standard response) and `res.json()` (sends JSON formatting and sets content-type headers).
+* **React Asynchronous Functions:** Implemented async/await calls inside components to fetch data from the server.
+* **List Rendering Keys:** Understood why a unique `key` prop is crucial when rendering array elements in React to ensure optimal DOM reconciliation.
+* **Linking Frontend and Backend:** Hooked up a Vite React frontend to request data from the local Express server.
+* **Axios Library:** Installed and configured Axios for cleaner API request management.
 
-## How I debugged them :
-Moslty googled the conceptes which i was not sure about.
+## Mistakes Made
+* **List Rendering Error:** Attempted to render list elements directly instead of mapping over the array.
+* **Async Call Omission:** Forgot to invoke the defined asynchronous fetch function inside the component.
 
-## Questions I can answer now :
-Difference between normal variables and useState variables.
-What are API calls.
+## Debugging Methods
+* Searched official React and Express documentations to review correct usage patterns.
+* Utilized Chrome Developer Tools (Console and Network tabs) to trace runtime execution errors.
 
+## Key Questions Addressed
+* **Difference between Normal Variables and useState Variables:** Normal variables reset on every component re-render, whereas `useState` variables persist their value across renders and trigger UI updates when changed.
+* **What are API Calls:** Requests made from the client-side app to an external server or backend API to fetch or persist data.

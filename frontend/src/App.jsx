@@ -5,6 +5,7 @@ import { productServices } from './services/ProductService';
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   async function fetchProducts() {
     try {
@@ -14,6 +15,9 @@ function App() {
       console.error('Could not fetch data from Express:', error);
     }
   }
+  function handleEdit(product){
+    setSelectedProduct(product);
+}
 
   useEffect(() => {
     fetchProducts();
@@ -21,8 +25,10 @@ function App() {
 
   return (
     <div>
-      <ProductForm/>
-      <ProductTable products={products} />
+      <ProductForm onProductAdded={fetchProducts} 
+                   selectedProduct={selectedProduct}
+                   clearSelection={() => setSelectedProduct(null)} />
+      <ProductTable products={products} onEdit={handleEdit} />
     </div>
   );
 }

@@ -55,6 +55,28 @@ app.post("/products", (req, res) => {
 
 });
 
+app.put("/products/:id", (req, res) => {
+    const { id } = req.params;
+    const { name, price, quantity, category } = req.body;
+
+    db.query(
+        "UPDATE products SET name = ?, price = ?, quantity = ?, category = ? WHERE id = ?",
+        [name, price, quantity, category, id],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Database Error"
+                });
+            }
+            res.json({
+                success: true,
+                message: "Product Updated Successfully"
+            });
+        }
+    );
+});
+
 const PORT = 5000;
 
 app.listen(PORT, () => {
