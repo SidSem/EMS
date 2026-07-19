@@ -1,14 +1,14 @@
-# Day 4: Full-Stack Integration and Data Fetching
+# Day 4: Full-Stack Integration and Data Fetching (Inventory & Employees)
 
 ## Concepts Learned Today
-* **Axios Integration:** Handled custom headers, base URLs, and async request operations.
-* **Component Mounting Hooks:** Loaded remote database records when components mount using standard React `useEffect`.
-* **Asynchronous Flow Management:** Configured conditional state loaders and indicators while waiting for network requests.
-* **API Error Boundaries:** Captured network errors using `try/catch` wrappers to prevent frontend crashes when the database server is offline.
+* **Axios Integration:** Handled custom configurations, base URLs, and async request operations inside `ProductService` and `EmployeeService`.
+* **Component Mounting Hooks:** Loaded remote database records when components mount using React `useEffect`.
+* **Asynchronous Flow Management:** Configured conditional state loaders and status badges while waiting for network requests.
+* **API Error Boundaries:** Captured network errors using `try/catch` wrappers to prevent frontend crashes when backend servers are offline.
 
 ## Mistakes Made
-* **Infinite Fetch Loop:** Omitted the dependency array `[]` in `useEffect`, resulting in API requests executing on every single state change.
-* **Mismatched Server Port:** Experienced network errors because of mismatched host addresses and ports between backend (5000) and frontend (5173).
+* **Infinite Fetch Loop:** Omitted dependency arrays `[]` in `useEffect`, resulting in API requests executing repeatedly on every state change.
+* **Mismatched Server Ports:** Experienced network connection errors due to mismatched host addresses and ports between backends (5000 / 5001) and client frontends.
 
 ## Debugging Methods
 * Tracked API routes and payloads under the Network tab of Google Chrome DevTools.
