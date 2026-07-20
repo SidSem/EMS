@@ -1,18 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import ProductForm from './components/Product/ProductForm';
-import ProductTable from './components/Product/ProductTable';
-import EmployeeForm from './components/Employee/EmployeeForm';
-import EmployeeTable from './components/Employee/EmployeeTable';
+import Dashboard from './pages/Dashboard';
+import Products from './pages/Products';
+import Employees from './pages/Employees';
 import { productServices } from './services/ProductService';
 import { employeeServices } from './services/EmployeeService';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('inventory'); // 'inventory' or 'employee'
+  const [currentPage, setCurrentPage] = useState('dashboard'); // 'dashboard', 'products', 'employees'
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [notification, setNotification] = useState(null);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light';
+  });
+
+  // Apply dark mode class to html element
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
   const showNotification = (text, type = 'success') => {
     setNotification({ text, type });
@@ -77,86 +93,109 @@ function App() {
     }
   }
 
+  // Load both resources on mount so dashboard metrics are accurate
   useEffect(() => {
-    if (activeTab === 'inventory') {
-      fetchProducts();
-    } else {
-      fetchEmployees();
-    }
-  }, [activeTab]);
+    fetchProducts();
+    fetchEmployees();
+  }, []);
 
   return (
-    <div className="app-container">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans">
       {notification && (
-        <div className={`notification-toast ${notification.type}`}>
-          {notification.text}
+        <div 
+          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium animate-bounce ${
+            notification.type === 'success' 
+              ? 'bg-emerald-600 border-emerald-500' 
+              : 'bg-rose-600 border-rose-500'
+          }`}
+        >
+          <span>{notification.text}</span>
         </div>
       )}
 
-      <header className="app-header">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <header className="border-b border-slate-200 dark:border-slate-800 pb-6 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="header-title">📊 EMS Dashboard</h1>
-            <p className="header-subtitle">Enterprise Management System</p>
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+              📊 EMS Dashboard
+            </h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Enterprise Employee & Inventory Management System
+            </p>
           </div>
-          <div className="tab-navigation" style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+          <div className="flex items-center gap-3 flex-wrap">
             <button 
-              className={`btn ${activeTab === 'inventory' ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setActiveTab('inventory')}
-              style={{ width: 'auto' }}
+              onClick={toggleTheme}
+              className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer text-sm font-semibold flex items-center gap-2 shadow-sm"
             >
-              📦 Inventory Module
+              {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
             </button>
-            <button 
-              className={`btn ${activeTab === 'employee' ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => setActiveTab('employee')}
-              style={{ width: 'auto' }}
-            >
-              👥 Employee Module
-            </button>
-          </div>
-        </div>
-      </header>
 
-      {activeTab === 'inventory' ? (
-        <main className="dashboard-grid">
-          <div className="column-form">
-            <ProductForm
-              onProductAdded={fetchProducts}
-              selectedProduct={selectedProduct}
-              clearSelection={() => setSelectedProduct(null)}
-              showNotification={showNotification}
-            />
+            {/* Navigation Bar */}
+            <nav className="flex gap-2 bg-slate-100 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200/50 dark:border-slate-800/50">
+              <button 
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
+                  currentPage === 'dashboard' 
+                    ? 'bg-violet-600 text-white shadow-md' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
+                }`}
+                onClick={() => setCurrentPage('dashboard')}
+              >
+                🏠 Dashboard
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
+                  currentPage === 'products' 
+                    ? 'bg-violet-600 text-white shadow-md' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
+                }`}
+                onClick={() => setCurrentPage('products')}
+              >
+                📦 Products
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
+                  currentPage === 'employees' 
+                    ? 'bg-violet-600 text-white shadow-md' 
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
+                }`}
+                onClick={() => setCurrentPage('employees')}
+              >
+                👥 Employees
+              </button>
+            </nav>
           </div>
+        </header>
 
-          <div className="column-table">
-            <ProductTable
-              products={products}
-              onEdit={handleProductEdit}
-              onDelete={handleProductDelete}
-            />
-          </div>
-        </main>
-      ) : (
-        <main className="dashboard-grid">
-          <div className="column-form">
-            <EmployeeForm
-              onEmployeeAdded={fetchEmployees}
-              selectedEmployee={selectedEmployee}
-              clearSelection={() => setSelectedEmployee(null)}
-              showNotification={showNotification}
-            />
-          </div>
+        {/* Page Content Routing */}
+        {currentPage === 'dashboard' && (
+          <Dashboard products={products} employees={employees} />
+        )}
 
-          <div className="column-table">
-            <EmployeeTable
-              employees={employees}
-              onEdit={handleEmployeeEdit}
-              onDelete={handleEmployeeDelete}
-            />
-          </div>
-        </main>
-      )}
+        {currentPage === 'products' && (
+          <Products
+            products={products}
+            fetchProducts={fetchProducts}
+            selectedProduct={selectedProduct}
+            setSelectedProduct={setSelectedProduct}
+            handleProductEdit={handleProductEdit}
+            handleProductDelete={handleProductDelete}
+            showNotification={showNotification}
+          />
+        )}
+
+        {currentPage === 'employees' && (
+          <Employees
+            employees={employees}
+            fetchEmployees={fetchEmployees}
+            selectedEmployee={selectedEmployee}
+            setSelectedEmployee={setSelectedEmployee}
+            handleEmployeeEdit={handleEmployeeEdit}
+            handleEmployeeDelete={handleEmployeeDelete}
+            showNotification={showNotification}
+          />
+        )}
+      </div>
     </div>
   );
 }
