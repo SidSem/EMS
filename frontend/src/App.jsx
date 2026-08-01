@@ -9,7 +9,12 @@ import { authService } from './services/AuthService';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {
-    return authService.getCurrentUser();
+    const user = authService.getCurrentUser();
+    if (user && !user.role) {
+      authService.logout();
+      return null;
+    }
+    return user;
   });
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [products, setProducts] = useState([]);

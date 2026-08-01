@@ -2,6 +2,7 @@ import React from 'react'
 import EmployeeRow from './EmployeeRow'
 
 function EmployeeTable({ employees, onEdit, onDelete, currentUser }) {
+  console.log("EmployeeTable received currentUser:", currentUser);
   const canEdit = currentUser?.role === 'Admin';
   const canDelete = currentUser?.role === 'Admin';
   const showActions = canEdit || canDelete;

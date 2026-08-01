@@ -2,6 +2,7 @@ import React from 'react'
 import ProductRow  from './ProductRow' 
 
 function ProductTable({products, onEdit, onDelete, currentUser}) {
+  console.log("ProductTable received currentUser:", currentUser);
   const canEdit = ['Admin', 'Manager'].includes(currentUser?.role);
   const canDelete = currentUser?.role === 'Admin';
   const showActions = canEdit || canDelete;
