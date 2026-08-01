@@ -1,7 +1,11 @@
 import React from 'react'
 import EmployeeRow from './EmployeeRow'
 
-function EmployeeTable({ employees, onEdit, onDelete }) {
+function EmployeeTable({ employees, onEdit, onDelete, currentUser }) {
+  const canEdit = currentUser?.role === 'Admin';
+  const canDelete = currentUser?.role === 'Admin';
+  const showActions = canEdit || canDelete;
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
       <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
@@ -23,14 +27,14 @@ function EmployeeTable({ employees, onEdit, onDelete }) {
               <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Salary</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Joining Date</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
+              {showActions && <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>}
             </tr>
           </thead>
           <tbody className="bg-white dark:bg-slate-900 divide-y divide-slate-100 dark:divide-slate-800/60">
             {employees.length === 0 ? (
               <tr>
-                <td colSpan="10" className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-400 italic">
-                  No employee records found. Add an employee to get started.
+                <td colSpan={showActions ? 10 : 9} className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-400 italic">
+                  No employee records found.
                 </td>
               </tr>
             ) : (
@@ -40,6 +44,8 @@ function EmployeeTable({ employees, onEdit, onDelete }) {
                   employee={employee} 
                   onEdit={onEdit} 
                   onDelete={onDelete} 
+                  canEdit={canEdit}
+                  canDelete={canDelete}
                 />
               ))
             )}

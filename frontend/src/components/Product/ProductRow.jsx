@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ProductRow({ product, onEdit, onDelete }) {
+function ProductRow({ product, onEdit, onDelete, canEdit, canDelete }) {
   return (
     <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors duration-150">
       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">{product.id}</td>
@@ -12,22 +12,28 @@ function ProductRow({ product, onEdit, onDelete }) {
         </span>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{product.quantity}</td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
-        <div className="flex gap-2 justify-center">
-          <button 
-            className="px-3 py-1.5 text-xs font-bold rounded-lg bg-violet-50 text-violet-700 hover:bg-violet-600 hover:text-white dark:bg-violet-950/40 dark:text-violet-400 dark:hover:bg-violet-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
-            onClick={() => onEdit(product)}
-          >
-            ✏️ Edit
-          </button>
-          <button 
-            className="px-3 py-1.5 text-xs font-bold rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white dark:bg-rose-950/40 dark:text-rose-400 dark:hover:bg-rose-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
-            onClick={() => onDelete(product.id)}
-          >
-            🗑️ Delete
-          </button>
-        </div>
-      </td>
+      {(canEdit || canDelete) && (
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
+          <div className="flex gap-2 justify-center">
+            {canEdit && (
+              <button 
+                className="px-3 py-1.5 text-xs font-bold rounded-lg bg-violet-50 text-violet-700 hover:bg-violet-600 hover:text-white dark:bg-violet-950/40 dark:text-violet-400 dark:hover:bg-violet-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
+                onClick={() => onEdit(product)}
+              >
+                ✏️ Edit
+              </button>
+            )}
+            {canDelete && (
+              <button 
+                className="px-3 py-1.5 text-xs font-bold rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white dark:bg-rose-950/40 dark:text-rose-400 dark:hover:bg-rose-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
+                onClick={() => onDelete(product.id)}
+              >
+                🗑️ Delete
+              </button>
+            )}
+          </div>
+        </td>
+      )}
     </tr>
   )
 }

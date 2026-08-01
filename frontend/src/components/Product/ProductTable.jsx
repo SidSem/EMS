@@ -1,7 +1,11 @@
 import React from 'react'
 import ProductRow  from './ProductRow' 
 
-function ProductTable({products, onEdit, onDelete}) {
+function ProductTable({products, onEdit, onDelete, currentUser}) {
+  const canEdit = ['Admin', 'Manager'].includes(currentUser?.role);
+  const canDelete = currentUser?.role === 'Admin';
+  const showActions = canEdit || canDelete;
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
       <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-100 dark:border-slate-800/80">
@@ -19,19 +23,26 @@ function ProductTable({products, onEdit, onDelete}) {
               <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Price</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Category</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Quantity</th>
-              <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
+              {showActions && <th scope="col" className="px-6 py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>}
             </tr>
           </thead>
           <tbody className="bg-white dark:bg-slate-900 divide-y divide-slate-100 dark:divide-slate-800/60">
             {products.length === 0 ? (
               <tr>
-                <td colSpan="6" className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-400 italic">
+                <td colSpan={showActions ? 6 : 5} className="px-6 py-8 text-center text-sm text-slate-500 dark:text-slate-400 italic">
                   No products found. Add a product to get started.
                 </td>
               </tr>
             ) : (
               products.map((product) => (
-                <ProductRow key={product.id} product={product} onEdit={onEdit} onDelete={onDelete} />
+                <ProductRow 
+                  key={product.id} 
+                  product={product} 
+                  onEdit={onEdit} 
+                  onDelete={onDelete} 
+                  canEdit={canEdit}
+                  canDelete={canDelete}
+                />
               ))
             )}
           </tbody>

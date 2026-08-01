@@ -1,6 +1,6 @@
 import React from 'react'
 
-function EmployeeRow({ employee, onEdit, onDelete }) {
+function EmployeeRow({ employee, onEdit, onDelete, canEdit, canDelete }) {
   const formatDate = (dateStr) => {
     if (!dateStr) return '';
     return dateStr.substring(0, 10);
@@ -38,22 +38,28 @@ function EmployeeRow({ employee, onEdit, onDelete }) {
           {employee.status}
         </span>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
-        <div className="flex gap-2 justify-center">
-          <button 
-            className="px-3 py-1.5 text-xs font-bold rounded-lg bg-violet-50 text-violet-700 hover:bg-violet-600 hover:text-white dark:bg-violet-950/40 dark:text-violet-400 dark:hover:bg-violet-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
-            onClick={() => onEdit(employee)}
-          >
-            ✏️ Edit
-          </button>
-          <button 
-            className="px-3 py-1.5 text-xs font-bold rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white dark:bg-rose-950/40 dark:text-rose-400 dark:hover:bg-rose-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
-            onClick={() => onDelete(employee.id)}
-          >
-            🗑️ Delete
-          </button>
-        </div>
-      </td>
+      {(canEdit || canDelete) && (
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
+          <div className="flex gap-2 justify-center">
+            {canEdit && (
+              <button 
+                className="px-3 py-1.5 text-xs font-bold rounded-lg bg-violet-50 text-violet-700 hover:bg-violet-600 hover:text-white dark:bg-violet-950/40 dark:text-violet-400 dark:hover:bg-violet-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
+                onClick={() => onEdit(employee)}
+              >
+                ✏️ Edit
+              </button>
+            )}
+            {canDelete && (
+              <button 
+                className="px-3 py-1.5 text-xs font-bold rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white dark:bg-rose-950/40 dark:text-rose-400 dark:hover:bg-rose-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
+                onClick={() => onDelete(employee.id)}
+              >
+                🗑️ Delete
+              </button>
+            )}
+          </div>
+        </td>
+      )}
     </tr>
   )
 }

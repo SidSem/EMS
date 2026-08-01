@@ -11,7 +11,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(() => {
     return authService.getCurrentUser();
   });
-  const [currentPage, setCurrentPage] = useState('dashboard'); // 'dashboard', 'products', 'employees'
+  const [currentPage, setCurrentPage] = useState('dashboard');
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [employees, setEmployees] = useState([]);
@@ -21,7 +21,6 @@ function App() {
     return localStorage.getItem('theme') || 'light';
   });
 
-  // Apply dark mode class to html element
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -119,12 +118,11 @@ function App() {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans flex flex-col justify-center">
         {notification && (
-          <div 
-            className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium ${
-              notification.type === 'success' 
-                ? 'bg-emerald-600 border-emerald-500' 
-                : 'bg-rose-600 border-rose-500'
-            }`}
+          <div
+            className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium ${notification.type === 'success'
+              ? 'bg-emerald-600 border-emerald-500'
+              : 'bg-rose-600 border-rose-500'
+              }`}
           >
             <span>{notification.text}</span>
           </div>
@@ -137,12 +135,11 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans">
       {notification && (
-        <div 
-          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium ${
-            notification.type === 'success' 
-              ? 'bg-emerald-600 border-emerald-500' 
-              : 'bg-rose-600 border-rose-500'
-          }`}
+        <div
+          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium ${notification.type === 'success'
+            ? 'bg-emerald-600 border-emerald-500'
+            : 'bg-rose-600 border-rose-500'
+            }`}
         >
           <span>{notification.text}</span>
         </div>
@@ -169,14 +166,14 @@ function App() {
               </span>
             </div>
 
-            <button 
+            <button
               onClick={toggleTheme}
               className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer text-sm font-semibold flex items-center gap-2 shadow-sm"
             >
               {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
             </button>
 
-            <button 
+            <button
               onClick={handleLogout}
               className="px-4 py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/40 border border-rose-200/50 dark:border-rose-800/30 transition-colors cursor-pointer text-sm font-semibold flex items-center gap-2 shadow-sm"
             >
@@ -185,32 +182,29 @@ function App() {
 
             {/* Navigation Bar */}
             <nav className="flex gap-2 bg-slate-100 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200/50 dark:border-slate-800/50">
-              <button 
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
-                  currentPage === 'dashboard' 
-                    ? 'bg-violet-600 text-white shadow-md' 
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
-                }`}
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${currentPage === 'dashboard'
+                  ? 'bg-violet-600 text-white shadow-md'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
+                  }`}
                 onClick={() => setCurrentPage('dashboard')}
               >
                 🏠 Dashboard
               </button>
-              <button 
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
-                  currentPage === 'products' 
-                    ? 'bg-violet-600 text-white shadow-md' 
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
-                }`}
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${currentPage === 'products'
+                  ? 'bg-violet-600 text-white shadow-md'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
+                  }`}
                 onClick={() => setCurrentPage('products')}
               >
                 📦 Products
               </button>
-              <button 
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
-                  currentPage === 'employees' 
-                    ? 'bg-violet-600 text-white shadow-md' 
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
-                }`}
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${currentPage === 'employees'
+                  ? 'bg-violet-600 text-white shadow-md'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
+                  }`}
                 onClick={() => setCurrentPage('employees')}
               >
                 👥 Employees

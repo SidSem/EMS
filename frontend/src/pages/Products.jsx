@@ -9,24 +9,30 @@ function Products({
   setSelectedProduct,
   handleProductEdit,
   handleProductDelete,
-  showNotification
+  showNotification,
+  currentUser
 }) {
+  const canWrite = ['Admin', 'Manager'].includes(currentUser?.role);
+
   return (
-    <main className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8 items-start">
-      <div className="lg:sticky lg:top-8">
-        <ProductForm
-          onProductAdded={fetchProducts}
-          selectedProduct={selectedProduct}
-          clearSelection={() => setSelectedProduct(null)}
-          showNotification={showNotification}
-        />
-      </div>
+    <main className={`grid ${canWrite ? 'grid-cols-1 lg:grid-cols-[380px_1fr]' : 'grid-cols-1'} gap-8 items-start`}>
+      {canWrite && (
+        <div className="lg:sticky lg:top-8">
+          <ProductForm
+            onProductAdded={fetchProducts}
+            selectedProduct={selectedProduct}
+            clearSelection={() => setSelectedProduct(null)}
+            showNotification={showNotification}
+          />
+        </div>
+      )}
 
       <div className="min-w-0">
         <ProductTable
           products={products}
           onEdit={handleProductEdit}
           onDelete={handleProductDelete}
+          currentUser={currentUser}
         />
       </div>
     </main>
