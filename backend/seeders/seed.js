@@ -12,12 +12,8 @@ const runSeeder = async () => {
         console.log("Connected successfully. Starting seed script...");
         
         try {
-            // Seed products
             await seedProducts(db);
-            
-            // Seed employees
             await seedEmployees(db);
-            
             console.log("\nDatabase seeding completed successfully!");
         } catch (error) {
             console.error("\nError occurred during seeding:", error);

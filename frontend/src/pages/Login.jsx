@@ -17,7 +17,6 @@ function Login({ onAuthSuccess, showNotification }) {
 
         try {
             if (isLoginMode) {
-                // Login action
                 const response = await authService.login(username, password);
                 if (response.success) {
                     showNotification("🔑 Login successful! Welcome back.", "success");
@@ -26,12 +25,10 @@ function Login({ onAuthSuccess, showNotification }) {
                     setError(response.message || "Failed to log in");
                 }
             } else {
-                // Register action
                 const response = await authService.register(username, email, password, role);
                 if (response.success) {
                     showNotification("🎉 Registration successful! Please log in.", "success");
                     setIsLoginMode(true);
-                    // Autofill username to make logging in easy
                     setPassword("");
                     setError("");
                 } else {
@@ -83,7 +80,6 @@ function Login({ onAuthSuccess, showNotification }) {
                 )}
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                    {/* Username Input */}
                     <div className="flex flex-col gap-1.5">
                         <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                             Username
@@ -98,7 +94,6 @@ function Login({ onAuthSuccess, showNotification }) {
                         />
                     </div>
 
-                    {/* Email Input - Register Only */}
                     {!isLoginMode && (
                         <div className="flex flex-col gap-1.5">
                             <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -115,7 +110,6 @@ function Login({ onAuthSuccess, showNotification }) {
                         </div>
                     )}
 
-                    {/* Password Input */}
                     <div className="flex flex-col gap-1.5">
                         <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                             Password
@@ -130,7 +124,6 @@ function Login({ onAuthSuccess, showNotification }) {
                         />
                     </div>
 
-                    {/* Role Select - Register Only */}
                     {!isLoginMode && (
                         <div className="flex flex-col gap-1.5">
                             <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -148,7 +141,6 @@ function Login({ onAuthSuccess, showNotification }) {
                         </div>
                     )}
 
-                    {/* Submit Button */}
                     <button
                         type="submit"
                         disabled={loading}

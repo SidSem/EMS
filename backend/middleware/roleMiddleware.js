@@ -1,8 +1,3 @@
-/**
- * Middleware to restrict route execution to specific user roles.
- * Must be mounted after authMiddleware.
- * @param {...string} allowedRoles 
- */
 export const authorizeRoles = (...allowedRoles) => {
     return (req, res, next) => {
         if (!req.user || !allowedRoles.includes(req.user.role)) {

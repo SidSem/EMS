@@ -1,9 +1,5 @@
 import { faker } from "@faker-js/faker";
 
-/**
- * Seeds the employees table with a random number of employee records between 40 and 50.
- * @param {import('mysql2').Connection} db 
- */
 export const seedEmployees = async (db) => {
     const query = (sql, params = []) => {
         return new Promise((resolve, reject) => {
@@ -18,7 +14,6 @@ export const seedEmployees = async (db) => {
     await query("DELETE FROM employees");
     await query("ALTER TABLE employees AUTO_INCREMENT = 1").catch(() => {});
 
-    // Generate between 40 and 50 employees
     const employeeCount = faker.number.int({ min: 40, max: 50 });
     console.log(`Generating ${employeeCount} employees...`);
 
@@ -49,17 +44,14 @@ export const seedEmployees = async (db) => {
         const name = `${firstName} ${lastName}`;
         const email = faker.internet.email({ firstName, lastName }).toLowerCase();
         
-        // Generate a random 10-digit number for BIGINT phone
         const phone = faker.number.int({ min: 6000000000, max: 9999999999 });
         
         const department = faker.helpers.arrayElement(departments);
         const roles = departmentRoles[department];
         const role = faker.helpers.arrayElement(roles);
         
-        // Generate realistic salary values between 35,000 and 150,000
         const salary = parseFloat(faker.finance.amount({ min: 35000, max: 150000, dec: 2 }));
         
-        // Generate joining dates in the past 5 years and format as YYYY-MM-DD
         const joiningDateObj = faker.date.past({ years: 5 });
         const joining_date = joiningDateObj.toISOString().split("T")[0];
         

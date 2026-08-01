@@ -1,9 +1,5 @@
 import { faker } from "@faker-js/faker";
 
-/**
- * Seeds the products table with 100 realistic product records.
- * @param {import('mysql2').Connection} db 
- */
 export const seedProducts = async (db) => {
     const query = (sql, params = []) => {
         return new Promise((resolve, reject) => {

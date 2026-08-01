@@ -161,7 +161,6 @@ function App() {
             </p>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
-            {/* User Identity Info */}
             <div className="hidden sm:flex flex-col text-right mr-2 bg-slate-100 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 px-3.5 py-1.5 rounded-xl">
               <span className="text-xs font-bold text-slate-800 dark:text-white flex items-center justify-end gap-1">
                 👤 {currentUser.username}
@@ -185,7 +184,6 @@ function App() {
               🚪 Log Out
             </button>
 
-            {/* Navigation Bar */}
             <nav className="flex gap-2 bg-slate-100 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200/50 dark:border-slate-800/50">
               <button
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${currentPage === 'dashboard'
@@ -218,7 +216,6 @@ function App() {
           </div>
         </header>
 
-        {/* Page Content Routing */}
         {currentPage === 'dashboard' && (
           <Dashboard products={products} employees={employees} />
         )}

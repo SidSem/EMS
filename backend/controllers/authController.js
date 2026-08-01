@@ -4,9 +4,6 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "ems_secret_key_2026";
 
-/**
- * Handles user registration.
- */
 export const register = async (req, res) => {
     const { username, email, password, role } = req.body;
     
@@ -14,7 +11,6 @@ export const register = async (req, res) => {
         return res.status(400).json({ success: false, message: "Please fill all required fields" });
     }
     
-    // Check if user already exists
     db.query("SELECT * FROM users WHERE username = ? OR email = ?", [username, email], async (err, results) => {
         if (err) {
             console.error("Database error during register check:", err);
@@ -26,11 +22,9 @@ export const register = async (req, res) => {
         }
         
         try {
-            // Hash password using bcrypt
             const hashedPassword = await bcrypt.hash(password, 10);
             const userRole = role || "User";
             
-            // Insert user details into the database
             db.query(
                 "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)",
                 [username, email, hashedPassword, userRole],
@@ -49,9 +43,6 @@ export const register = async (req, res) => {
     });
 };
 
-/**
- * Handles user login and session token generation.
- */
 export const login = async (req, res) => {
     const { username, password } = req.body;
     
@@ -59,7 +50,6 @@ export const login = async (req, res) => {
         return res.status(400).json({ success: false, message: "Please provide username and password" });
     }
     
-    // Query database for user (supports both username and email log-in)
     db.query(
         "SELECT * FROM users WHERE username = ? OR email = ?",
         [username, username],
@@ -76,14 +66,12 @@ export const login = async (req, res) => {
             const user = results[0];
             
             try {
-                // Compare passwords. Note the standard 'password' DB column spelling.
                 const isMatch = await bcrypt.compare(password, user.password);
                 
                 if (!isMatch) {
                     return res.status(401).json({ success: false, message: "Invalid username or password" });
                 }
                 
-                // Sign JWT Token
                 const token = jwt.sign(
                     { id: user.id, username: user.username, email: user.email, role: user.role },
                     JWT_SECRET,
