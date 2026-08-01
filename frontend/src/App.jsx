@@ -232,6 +232,7 @@ function App() {
             handleProductEdit={handleProductEdit}
             handleProductDelete={handleProductDelete}
             showNotification={showNotification}
+            currentUser={currentUser}
           />
         )}
 
@@ -244,6 +245,7 @@ function App() {
             handleEmployeeEdit={handleEmployeeEdit}
             handleEmployeeDelete={handleEmployeeDelete}
             showNotification={showNotification}
+            currentUser={currentUser}
           />
         )}
       </div>
