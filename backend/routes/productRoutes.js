@@ -5,8 +5,12 @@ import {
     updateProduct,
     deleteProduct
 } from "../controllers/productController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+// Protect all product routes
+router.use(authMiddleware);
 
 router.get("/", getAllProducts);
 router.post("/", addProduct);

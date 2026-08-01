@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import Employees from './pages/Employees';
+import Login from './pages/Login';
 import { productServices } from './services/ProductService';
 import { employeeServices } from './services/EmployeeService';
+import { authService } from './services/AuthService';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(() => {
+    return authService.getCurrentUser();
+  });
   const [currentPage, setCurrentPage] = useState('dashboard'); // 'dashboard', 'products', 'employees'
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -93,17 +98,47 @@ function App() {
     }
   }
 
-  // Load both resources on mount so dashboard metrics are accurate
+  // Load both resources on mount or when user authenticates
   useEffect(() => {
-    fetchProducts();
-    fetchEmployees();
-  }, []);
+    if (currentUser) {
+      fetchProducts();
+      fetchEmployees();
+    }
+  }, [currentUser]);
+
+  const handleLogout = () => {
+    authService.logout();
+    setCurrentUser(null);
+    setProducts([]);
+    setEmployees([]);
+    showNotification("🔒 Logged out successfully.", "success");
+  };
+
+  // Render Login overlay if unauthenticated
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans flex flex-col justify-center">
+        {notification && (
+          <div 
+            className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium ${
+              notification.type === 'success' 
+                ? 'bg-emerald-600 border-emerald-500' 
+                : 'bg-rose-600 border-rose-500'
+            }`}
+          >
+            <span>{notification.text}</span>
+          </div>
+        )}
+        <Login onAuthSuccess={setCurrentUser} showNotification={showNotification} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans">
       {notification && (
         <div 
-          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium animate-bounce ${
+          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium ${
             notification.type === 'success' 
               ? 'bg-emerald-600 border-emerald-500' 
               : 'bg-rose-600 border-rose-500'
@@ -124,11 +159,28 @@ function App() {
             </p>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
+            {/* User Identity Info */}
+            <div className="hidden sm:flex flex-col text-right mr-2 bg-slate-100 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 px-3.5 py-1.5 rounded-xl">
+              <span className="text-xs font-bold text-slate-800 dark:text-white flex items-center justify-end gap-1">
+                👤 {currentUser.username}
+              </span>
+              <span className="text-[9px] font-extrabold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+                {currentUser.role}
+              </span>
+            </div>
+
             <button 
               onClick={toggleTheme}
               className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer text-sm font-semibold flex items-center gap-2 shadow-sm"
             >
               {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+            </button>
+
+            <button 
+              onClick={handleLogout}
+              className="px-4 py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/40 border border-rose-200/50 dark:border-rose-800/30 transition-colors cursor-pointer text-sm font-semibold flex items-center gap-2 shadow-sm"
+            >
+              🚪 Log Out
             </button>
 
             {/* Navigation Bar */}

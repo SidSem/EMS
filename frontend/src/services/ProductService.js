@@ -1,16 +1,16 @@
-import axios from "axios";
+import api from "./api";
 
-const API_URL = "http://localhost:5000/products";
+const API_URL = "/products";
 
 export const productServices = {
     getAllProducts: async () => {
-        const response = await axios.get(API_URL);
+        const response = await api.get(API_URL);
         return response.data;
     },
 
     addProduct: async (data) => {
         try {
-            const response = await axios.post(API_URL, data);
+            const response = await api.post(API_URL, data);
             return response.data;
         } catch (error) {
             console.error("Error adding product:", error);
@@ -20,7 +20,7 @@ export const productServices = {
 
     updateProduct: async (id, data) => {
         try {
-            const response = await axios.put(`${API_URL}/${id}`, data);
+            const response = await api.put(`${API_URL}/${id}`, data);
             return response.data;
         } catch (error) {
             console.error("Error updating product:", error);
@@ -30,7 +30,7 @@ export const productServices = {
 
     deleteProduct: async (id) => {
         try {
-            const response = await axios.delete(`${API_URL}/${id}`);
+            const response = await api.delete(`${API_URL}/${id}`);
             return response.data;
         } catch (error) {
             console.error("Error deleting product:", error);
