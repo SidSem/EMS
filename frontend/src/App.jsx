@@ -177,13 +177,6 @@ function App() {
               {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
             </button>
 
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-950/40 border border-rose-200/50 dark:border-rose-800/30 transition-colors cursor-pointer text-sm font-semibold flex items-center gap-2 shadow-sm"
-            >
-              🚪 Log Out
-            </button>
-
             <nav className="flex gap-2 bg-slate-100 dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200/50 dark:border-slate-800/50">
               <button
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${currentPage === 'dashboard'
