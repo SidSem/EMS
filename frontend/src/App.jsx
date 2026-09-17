@@ -8,14 +8,7 @@ import { employeeServices } from './services/EmployeeService';
 import { authService } from './services/AuthService';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(() => {
-    const user = authService.getCurrentUser();
-    if (user && !user.role) {
-      authService.logout();
-      return null;
-    }
-    return user;
-  });
+  const [currentUser, setCurrentUser] = useState({ username: 'Admin', role: 'admin' });
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -118,24 +111,7 @@ function App() {
     showNotification("🔒 Logged out successfully.", "success");
   };
 
-  // Render Login overlay if unauthenticated
-  if (!currentUser) {
-    return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans flex flex-col justify-center">
-        {notification && (
-          <div
-            className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl border text-white font-medium ${notification.type === 'success'
-              ? 'bg-emerald-600 border-emerald-500'
-              : 'bg-rose-600 border-rose-500'
-              }`}
-          >
-            <span>{notification.text}</span>
-          </div>
-        )}
-        <Login onAuthSuccess={setCurrentUser} showNotification={showNotification} />
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 transition-colors duration-300 font-sans">
