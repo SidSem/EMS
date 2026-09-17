@@ -69,12 +69,12 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="flex flex-col gap-1.5">
                     <label htmlFor="input-name" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Full Name</label>
-                    <input 
+                    <input
                         id="input-name"
-                        type="text" 
-                        name="name" 
-                        value={data.name} 
-                        onChange={handleChange} 
+                        type="text"
+                        name="name"
+                        value={data.name}
+                        onChange={handleChange}
                         placeholder="Enter full name"
                         className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
                         required
@@ -84,12 +84,12 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
                         <label htmlFor="input-email" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email Address</label>
-                        <input 
+                        <input
                             id="input-email"
-                            type="email" 
-                            name="email" 
-                            value={data.email} 
-                            onChange={handleChange} 
+                            type="email"
+                            name="email"
+                            value={data.email}
+                            onChange={handleChange}
                             placeholder="name@company.com"
                             className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
                             required
@@ -98,12 +98,12 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
 
                     <div className="flex flex-col gap-1.5">
                         <label htmlFor="input-phone" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Phone Number</label>
-                        <input 
+                        <input
                             id="input-phone"
-                            type="tel" 
-                            name="phone" 
-                            value={data.phone} 
-                            onChange={handleChange} 
+                            type="tel"
+                            name="phone"
+                            value={data.phone}
+                            onChange={handleChange}
                             placeholder="Enter 10-digit number"
                             pattern="[0-9]{10,15}"
                             title="Please enter a valid phone number (10 to 15 digits)"
@@ -116,7 +116,7 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
                         <label htmlFor="input-department" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Department</label>
-                        <select 
+                        <select
                             id="input-department"
                             name="department"
                             value={data.department}
@@ -137,12 +137,12 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
 
                     <div className="flex flex-col gap-1.5">
                         <label htmlFor="input-role" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Job Title / Role</label>
-                        <input 
+                        <input
                             id="input-role"
-                            type="text" 
-                            name="role" 
-                            value={data.role} 
-                            onChange={handleChange} 
+                            type="text"
+                            name="role"
+                            value={data.role}
+                            onChange={handleChange}
                             placeholder="e.g. Software Engineer"
                             className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
                             required
@@ -153,12 +153,12 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
                         <label htmlFor="input-salary" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Annual Salary ($)</label>
-                        <input 
+                        <input
                             id="input-salary"
-                            type="number" 
-                            name="salary" 
-                            value={data.salary} 
-                            onChange={handleChange} 
+                            type="number"
+                            name="salary"
+                            value={data.salary}
+                            onChange={handleChange}
                             placeholder="0.00"
                             step="0.01"
                             min="0"
@@ -169,12 +169,12 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
 
                     <div className="flex flex-col gap-1.5">
                         <label htmlFor="input-joining-date" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Joining Date</label>
-                        <input 
+                        <input
                             id="input-joining-date"
-                            type="date" 
-                            name="joining_date" 
-                            value={data.joining_date} 
-                            onChange={handleChange} 
+                            type="date"
+                            name="joining_date"
+                            value={data.joining_date}
+                            onChange={handleChange}
                             className="w-full px-3 py-2 text-sm bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all"
                             required
                         />
@@ -183,7 +183,7 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
 
                 <div className="flex flex-col gap-1.5">
                     <label htmlFor="input-status" className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Employment Status</label>
-                    <select 
+                    <select
                         id="input-status"
                         name="status"
                         value={data.status}
@@ -203,9 +203,9 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
                         {selectedEmployee ? '✏️ Update Employee' : '➕ Add Employee'}
                     </button>
                     {selectedEmployee && (
-                        <button 
-                            type="button" 
-                            className="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700/80 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-lg transition-all duration-150 cursor-pointer" 
+                        <button
+                            type="button"
+                            className="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700/80 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-lg transition-all duration-150 cursor-pointer"
                             onClick={() => {
                                 clearSelection();
                                 setData(INITIAL_FORM_STATE);

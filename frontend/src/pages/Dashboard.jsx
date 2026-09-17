@@ -1,10 +1,10 @@
 import React from 'react';
 
 function Dashboard({ products = [], employees = [] }) {
-  // Compute metrics dynamically
+
   const totalProducts = products.length;
   const totalEmployees = employees.length;
-  
+
   const inventoryValue = products.reduce((acc, item) => {
     const price = Number(item.price) || 0;
     const qty = Number(item.quantity) || 0;
