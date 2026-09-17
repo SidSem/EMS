@@ -2,9 +2,9 @@ import React from 'react'
 import EmployeeRow from './EmployeeRow'
 
 function EmployeeTable({ employees, onEdit, onDelete, currentUser }) {
-  console.log("EmployeeTable received currentUser:", currentUser);
-  const canEdit = currentUser?.role === 'Admin';
-  const canDelete = currentUser?.role === 'Admin';
+  const roleLower = currentUser?.role?.toLowerCase();
+  const canEdit = roleLower === 'admin';
+  const canDelete = roleLower === 'admin';
   const showActions = canEdit || canDelete;
 
   return (
@@ -39,9 +39,9 @@ function EmployeeTable({ employees, onEdit, onDelete, currentUser }) {
                 </td>
               </tr>
             ) : (
-              employees.map((employee) => (
+              employees.map((employee, idx) => (
                 <EmployeeRow 
-                  key={employee.id} 
+                  key={employee.id || employee._id || idx} 
                   employee={employee} 
                   onEdit={onEdit} 
                   onDelete={onDelete} 

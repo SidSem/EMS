@@ -12,7 +12,12 @@ function ProductForm({ onProductAdded, selectedProduct, clearSelection, showNoti
 
     useEffect(() => {
         if (selectedProduct) {
-            setData(selectedProduct);
+            setData({
+                name: selectedProduct.name || "",
+                price: selectedProduct.price ?? 0,
+                quantity: selectedProduct.quantity ?? selectedProduct.stock ?? 0,
+                category: selectedProduct.category || ""
+            });
         } else {
             setData(INITIAL_FORM_STATE);
         }
@@ -30,7 +35,8 @@ function ProductForm({ onProductAdded, selectedProduct, clearSelection, showNoti
         e.preventDefault();
         try {
             if (selectedProduct) {
-                await productServices.updateProduct(selectedProduct.id, data);
+                const prodId = selectedProduct.id || selectedProduct._id;
+                await productServices.updateProduct(prodId, data);
                 showNotification("✅ Product Updated Successfully", "success");
                 clearSelection();
             } else {

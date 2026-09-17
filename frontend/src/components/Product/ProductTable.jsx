@@ -2,9 +2,9 @@ import React from 'react'
 import ProductRow  from './ProductRow' 
 
 function ProductTable({products, onEdit, onDelete, currentUser}) {
-  console.log("ProductTable received currentUser:", currentUser);
-  const canEdit = ['Admin', 'Manager'].includes(currentUser?.role);
-  const canDelete = currentUser?.role === 'Admin';
+  const roleLower = currentUser?.role?.toLowerCase();
+  const canEdit = ['admin', 'manager'].includes(roleLower);
+  const canDelete = roleLower === 'admin';
   const showActions = canEdit || canDelete;
 
   return (
@@ -35,9 +35,9 @@ function ProductTable({products, onEdit, onDelete, currentUser}) {
                 </td>
               </tr>
             ) : (
-              products.map((product) => (
+              products.map((product, idx) => (
                 <ProductRow 
-                  key={product.id} 
+                  key={product.id || product._id || idx} 
                   product={product} 
                   onEdit={onEdit} 
                   onDelete={onDelete} 

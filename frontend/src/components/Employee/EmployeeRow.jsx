@@ -19,23 +19,27 @@ function EmployeeRow({ employee, onEdit, onDelete, canEdit, canDelete }) {
     }
   };
 
+  const empId = employee.id || employee._id;
+  const roleName = employee.role || employee.position || '—';
+  const statusName = employee.status || 'Active';
+
   return (
     <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors duration-150">
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">{employee.id}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">{empId}</td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-900 dark:text-white">{employee.name}</td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{employee.email}</td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{employee.phone}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{employee.email || '—'}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{employee.phone || '—'}</td>
       <td className="px-6 py-4 whitespace-nowrap text-sm">
         <span className="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 rounded-md px-2 py-0.5 text-xs font-semibold border border-slate-200/40 dark:border-slate-700/40">
-          {employee.department}
+          {employee.department || 'General'}
         </span>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{employee.role}</td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">${Number(employee.salary).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{formatDate(employee.joining_date)}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{roleName}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">${Number(employee.salary || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-300">{employee.joining_date ? formatDate(employee.joining_date) : '—'}</td>
       <td className="px-6 py-4 whitespace-nowrap text-sm">
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border uppercase tracking-wider ${getStatusClass(employee.status)}`}>
-          {employee.status}
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border uppercase tracking-wider ${getStatusClass(statusName)}`}>
+          {statusName}
         </span>
       </td>
       {(canEdit || canDelete) && (
@@ -52,7 +56,7 @@ function EmployeeRow({ employee, onEdit, onDelete, canEdit, canDelete }) {
             {canDelete && (
               <button 
                 className="px-3 py-1.5 text-xs font-bold rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white dark:bg-rose-950/40 dark:text-rose-400 dark:hover:bg-rose-600 dark:hover:text-white transition-all duration-150 cursor-pointer" 
-                onClick={() => onDelete(employee.id)}
+                onClick={() => onDelete(empId)}
               >
                 🗑️ Delete
               </button>

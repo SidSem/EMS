@@ -19,6 +19,7 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
         if (selectedEmployee) {
             setData({
                 ...selectedEmployee,
+                role: selectedEmployee.role || selectedEmployee.position || "",
                 joining_date: selectedEmployee.joining_date ? selectedEmployee.joining_date.substring(0, 10) : "",
                 phone: selectedEmployee.phone ? String(selectedEmployee.phone) : "",
                 salary: selectedEmployee.salary ? String(selectedEmployee.salary) : ""
@@ -41,12 +42,13 @@ function EmployeeForm({ onEmployeeAdded, selectedEmployee, clearSelection, showN
         try {
             const payload = {
                 ...data,
-                phone: Number(data.phone),
-                salary: parseFloat(data.salary)
+                phone: String(data.phone),
+                salary: parseFloat(data.salary) || 0
             };
 
             if (selectedEmployee) {
-                await employeeServices.updateEmployee(selectedEmployee.id, payload);
+                const empId = selectedEmployee.id || selectedEmployee._id;
+                await employeeServices.updateEmployee(empId, payload);
                 showNotification("✅ Employee Updated Successfully", "success");
                 clearSelection();
             } else {

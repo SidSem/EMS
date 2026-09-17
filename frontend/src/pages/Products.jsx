@@ -12,7 +12,8 @@ function Products({
   showNotification,
   currentUser
 }) {
-  const canWrite = ['Admin', 'Manager'].includes(currentUser?.role);
+  const role = currentUser?.role?.toLowerCase();
+  const canWrite = ['admin', 'manager'].includes(role);
 
   return (
     <main className={`grid ${canWrite ? 'grid-cols-1 lg:grid-cols-[380px_1fr]' : 'grid-cols-1'} gap-8 items-start`}>

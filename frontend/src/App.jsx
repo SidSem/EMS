@@ -8,7 +8,7 @@ import { employeeServices } from './services/EmployeeService';
 import { authService } from './services/AuthService';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({ username: 'Admin', role: 'admin' });
+  const [currentUser, setCurrentUser] = useState({ username: 'Admin', role: 'Admin' });
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);

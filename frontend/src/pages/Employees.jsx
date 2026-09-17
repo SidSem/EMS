@@ -12,7 +12,7 @@ function Employees({
   showNotification,
   currentUser
 }) {
-  const canWrite = currentUser?.role === 'Admin';
+  const canWrite = currentUser?.role?.toLowerCase() === 'admin';
 
   return (
     <main className={`grid ${canWrite ? 'grid-cols-1 lg:grid-cols-[380px_1fr]' : 'grid-cols-1'} gap-8 items-start`}>
